@@ -1,0 +1,13 @@
+numpy
+scipy
+scrapy
+beautifulsoup4
+click
+six
+snowballstemmer
+Sphinx
+sphinxcontrib-websupport
+urllib3
+selenium
+peewee
+pdfminer.six
