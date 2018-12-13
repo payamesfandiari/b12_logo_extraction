@@ -80,6 +80,7 @@ class LogoExtractorPipeline(object):
                     a_id = a.xpath('@id').get()
                     a_class = a.xpath('@class').get()
                     if a_id:
+                        # Recursively run jquery script to find the image URL of the background image.
                         imgs = self.driver.execute_script("return $('a#{0}').map(function(){{return $(this).css('background-image')!= 'none' ? $(this).css('background-image') : null}})".format(a_id))
                         if len(imgs) == 0 :
                             imgs = self.driver.execute_script(
@@ -91,6 +92,7 @@ class LogoExtractorPipeline(object):
                             imgs = self.driver.execute_script(
                                 "return $('a.{0}').find('*').map(function(){{return $(this).css('background-image')!= 'none' ? $(this).css('background-image') : null}})".format(
                                     a_class))
+                    # If we find a background image, we get rid of the url() from it and push it as the correct answer.
                     if len(imgs) > 0:
                         img_url = imgs[0]
                         if img_url.startswith('url('):
@@ -110,7 +112,7 @@ class LogoExtractorPipeline(object):
                             self.log.info("Item added to the DB!")
                         except IntegrityError:
                             pass
-                #   If you don't like to use headless then nothing we can do
+                #   If you don't like to use headless browser then there is nothing we can do!
                 else:
                     try:
                         with db.atomic():

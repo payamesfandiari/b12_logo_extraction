@@ -18,14 +18,12 @@ class LogoSpider(scrapy.Spider):
     def parse(self, response):
         """
         We parse the webpage naively. We look at 3 cases:
-            First, we look at all the images that have logo in their url.
+            First, we look at images inside a <div> or <header>
             Second, images that are in a <a> tag or <div> which are part of header or logo
             Third, we look at <a>,<li>,<div> tags that have header in their class or id and have a background image
         :param response: The webpage to be parsed
         :return:
         """
-        # content = response.css('div:not([style*="hidden"]):not([style*="none"])')
-        # imgs = response.xpath('//div[not(contains(@style,"none") or contains(@style,"hidden"))]//img[contains(@src,"logo")]/@src').extract()
         header = response.xpath("//div[contains(@class,'head') or contains(@id,'head')] | //div[contains(@class,'logo') or contains(@id,'logo')] | //header[contains(@class,'logo') or contains(@id,'logo')] | //header[contains(@class,'head') or contains(@id,'head')]")
         if header is not None:
             if len(header) > 1:
