@@ -8,6 +8,7 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+import os
 
 BOT_NAME = 'logo_extractor'
 
@@ -89,7 +90,10 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SANITY_CHECK_LOGO_POSITION = True
-DB = 'logo.db'
-CHROME_WEBDRIVER_PATH = "/Users/Payam/PycharmProjects/b12_logo_extraction/logo_extractor/chromedriver"
+SANITY_CHECK_LOGO_POSITION = True   # Use Selenium to further improve the results
+DB = os.path.join(BASE_DIR,'logo.db')   # Address to the sqlite DB file
+CHROME_WEBDRIVER_PATH = os.path.join(BASE_DIR,'chrome_driver/','chromedriver') # address of the chromedriver
+JQUERY_LOCATION = os.path.join(BASE_DIR,'js/','jquery-3.3.1.min.js')  # jquery file location
+
